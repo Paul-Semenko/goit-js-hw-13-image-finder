@@ -15,24 +15,24 @@ function onSearch(e) {
     photoApiService.query = e.currentTarget.elements.query.value;
     showLoadMoreBtn();
     photoApiService.resetPage();
-    photoApiService.fetchPhoto().then(appendHitsMarkup);
+    photoApiService.fetchPhoto().then(appendHitsMarkup)
     handleButtonClick();
 
 }
 
 function onLoadMore() {
-    photoApiService.fetchPhoto().then(appendHitsMarkup);
+    photoApiService.fetchPhoto().then(appendHitsMarkup)
 
 }
 
 function appendHitsMarkup(hits) {
-    refs.gallerysList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
+    refs.galleryList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
 
 
 }
 
 function clearHitsList() {
-    refs.gallerysList.innerHTML = '';
+    refs.galleryList.innerHTML = '';
 }
 
 function showLoadMoreBtn() {
