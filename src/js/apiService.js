@@ -1,5 +1,5 @@
 const API_KEY = '23035596-1a90b7391e585725696c71550';
-const BASE_URL = 'https://pixabay.com/api';
+const BASE_URL = 'https://pixabay.com/api/?image_type=photo&orientation=horizontal';
 
 export default class PhotoApiService {
     constructor() {
@@ -7,12 +7,15 @@ export default class PhotoApiService {
         this.page = 1;
     }
 
-    async fetchPhoto() {
-        const url = `${BASE_URL}?key=${API_KEY}&image_type=photo&orientation=horizontal&q=${this.searchQuery}&per_page=12&page=${this.page}`;
-        const response = await fetch(url);
-        const { hits } = await response.json();
-        this.page += 1;
-        return hits;
+    fetchPhoto() {
+        const url = `${BASE_URL}&key=${API_KEY}&q=${this.searchQuery}&per_page=12&page=${this.page}`;
+        return fetch(url)
+            .then(response => response.json())
+            .then(({ hits }) => {
+                this.page += 1;
+                return hits;
+
+            });
 
     }
 
