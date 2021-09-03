@@ -7,15 +7,12 @@ export default class PhotoApiService {
         this.page = 1;
     }
 
-    fetchPhoto() {
+    async fetchPhoto() {
         const url = `${BASE_URL}?key=${API_KEY}&image_type=photo&orientation=horizontal&q=${this.searchQuery}&per_page=12&page=${this.page}`;
-        return fetch(url)
-            .then(response => response.json())
-            .then(({ hits }) => {
-                this.page += 1;
-                return hits;
-
-            });
+        const response = await fetch(url);
+        const { hits } = await response.json();
+        this.page += 1;
+        return hits;
 
     }
 
