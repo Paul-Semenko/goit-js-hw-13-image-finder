@@ -15,13 +15,15 @@ function onSearch(e) {
     photoApiService.query = e.currentTarget.elements.query.value;
     showLoadMoreBtn();
     photoApiService.resetPage();
-    photoApiService.fetchPhoto().then(appendHitsMarkup)
+    photoApiService.fetchPhoto()
+        .then(appendHitsMarkup)
     handleButtonClick();
 
 }
 
 function onLoadMore() {
-    photoApiService.fetchPhoto().then(appendHitsMarkup)
+    photoApiService.fetchPhoto()
+        .then(appendHitsMarkup)
 
 }
 
