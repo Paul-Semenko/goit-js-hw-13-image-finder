@@ -17,6 +17,7 @@ export default class PhotoApiService {
                 return hits;
             });
 
+
     }
 
     resetPage() {

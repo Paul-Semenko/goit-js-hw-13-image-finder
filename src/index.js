@@ -6,6 +6,7 @@ import photoCardTpl from './templates/photoCard.hbs';
 import { refs } from './js/refs.js';
 import * as basicLightbox from 'basiclightbox';
 
+
 const photoApiService = new PhotoApiService();
 
 refs.formElem.addEventListener('submit', onSearch);
@@ -28,6 +29,7 @@ function onSearch(e) {
 
     });
     photoApiService.fetchPhoto().then(appendHitsMarkup)
+
     clearHitsList();
     showLoadMoreBtn();
     photoApiService.resetPage();
@@ -44,6 +46,7 @@ function onLoadMore() {
 function appendHitsMarkup(hits) {
     refs.galleryList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
     handleButtonClick();
+
 
 }
 
