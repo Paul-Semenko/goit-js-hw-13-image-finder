@@ -32,6 +32,7 @@ function onSearch(e) {
 
     clearHitsList();
     showLoadMoreBtn();
+
     photoApiService.resetPage();
 
 }
@@ -40,14 +41,11 @@ function onLoadMore() {
     photoApiService.fetchPhoto()
         .then(appendHitsMarkup)
 
-
 }
 
 function appendHitsMarkup(hits) {
     refs.galleryList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
     handleButtonClick();
-
-
 }
 
 function clearHitsList() {
