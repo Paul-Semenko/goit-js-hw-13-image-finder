@@ -40,12 +40,12 @@ function onSearch(e) {
 function onLoadMore() {
     photoApiService.fetchPhoto()
         .then(appendHitsMarkup)
-
+        .then(hits => { handleButtonClick() })
 }
 
 function appendHitsMarkup(hits) {
     refs.galleryList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
-    handleButtonClick();
+
 }
 
 function clearHitsList() {
@@ -54,6 +54,7 @@ function clearHitsList() {
 
 function showLoadMoreBtn() {
     refs.buttonLoadMore.classList.remove('is-hidden');
+
 }
 
 function hideLoadMoreBtn() {
