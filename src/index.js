@@ -1,4 +1,6 @@
 import "./sass/main.scss";
+import { alert, notice, info, success, error } from '@pnotify/core';
+import '@pnotify/core/dist/BrightTheme.css';
 import PhotoApiService from './js/apiService.js';
 import photoCardTpl from './templates/photoCard.hbs';
 import { refs } from './js/refs.js';
@@ -12,13 +14,23 @@ refs.buttonLoadMore.addEventListener('click', onLoadMore)
 function onSearch(e) {
     e.preventDefault();
 
+    photoApiService.query = e.currentTarget.elements.query.value
+    if (photoApiService.query === '') {
+        return alert({ text: 'There are nothing in the input! Try to type something' });
+    }
+
+    photoApiService.fetchPhoto().then(hits => {
+        const match = hits.length;
+        if (match === 0) {
+            error({ text: 'Incorrect request!' });
+            hideLoadMoreBtn();
+        }
+
+    });
+    photoApiService.fetchPhoto().then(appendHitsMarkup)
     clearHitsList();
-    photoApiService.query = e.currentTarget.elements.query.value;
     showLoadMoreBtn();
     photoApiService.resetPage();
-    photoApiService.fetchPhoto()
-        .then(appendHitsMarkup)
-    handleButtonClick();
 
 }
 
@@ -26,11 +38,12 @@ function onLoadMore() {
     photoApiService.fetchPhoto()
         .then(appendHitsMarkup)
 
+
 }
 
 function appendHitsMarkup(hits) {
     refs.galleryList.insertAdjacentHTML('beforeend', photoCardTpl(hits));
-
+    handleButtonClick();
 
 }
 
@@ -42,10 +55,15 @@ function showLoadMoreBtn() {
     refs.buttonLoadMore.classList.remove('is-hidden');
 }
 
-const element = document.querySelector('#js-gallery');
+function hideLoadMoreBtn() {
+    refs.buttonLoadMore.classList.add('is-hidden');
+}
+
+
 
 function handleButtonClick() {
-    element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: "nearest", });
+    const element = document.querySelector('.scroll');
+    element.scrollIntoView({ block: "end", behavior: "smooth" });
 
 }
 
@@ -57,9 +75,6 @@ function onOpenModal(e) {
         return
     }
     const instance = basicLightbox.create(`
-<img src="${e.target.dataset.src}" width="800" height="600">
-`)
-
+<img src="${e.target.dataset.src}" width="800" height="600">`)
     instance.show();
-
 }

@@ -5,6 +5,7 @@ export default class PhotoApiService {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
+
     }
 
     fetchPhoto() {
@@ -14,7 +15,6 @@ export default class PhotoApiService {
             .then(({ hits }) => {
                 this.page += 1;
                 return hits;
-
             });
 
     }
